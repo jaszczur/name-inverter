@@ -3,21 +3,6 @@
             [clojure.string :as str]
             [name-inverter.core :refer :all]))
 
-(defn ommit-honorifics [[first & rest :as names]]
-  (if (some (partial = first) ["Mr." "Mrs."]) rest names))
-
-(defn invert-name [name]
-  (if (nil? name)
-    ""
-    (let [names (str/split (str/trim name) #"\s+")
-          names (ommit-honorifics names)
-          [first last & post-nominals] names]
-      (if (= (count names) 1)
-        first
-        (str/trim (format "%s, %s %s" last first (apply str (interpose " " post-nominals))))))))
-
-
-
 (defn assert-inverted [name inverted]
   (is (= (invert-name name) inverted)))
 
