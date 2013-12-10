@@ -9,11 +9,12 @@
 (defn invert-name [name]
   (if (nil? name)
     ""
-    (let [splitted (str/split (str/trim name) #"\s+")
-          splitted (ommit-honorifics splitted)]
-      (if (= (count splitted) 1)
-        (nth splitted 0)
-        (str (nth splitted 1) ", " (nth splitted 0))))))
+    (let [names (str/split (str/trim name) #"\s+")
+          names (ommit-honorifics names)
+          [first last & post-nominals] names]
+      (if (= (count names) 1)
+        first
+        (str/trim (format "%s, %s %s" last first (apply str (interpose " " post-nominals))))))))
 
 
 
@@ -35,4 +36,6 @@
     (assert-inverted "  John   Smith" "Smith, John"))
   (testing "should ignore honorifics"
     (assert-inverted "Mr. John Smith" "Smith, John")
-    (assert-inverted "Mrs. Barbara Smith" "Smith, Barbara")))
+    (assert-inverted "Mrs. Barbara Smith" "Smith, Barbara"))
+  (testing "post nominals should stay at the end"
+    (assert-inverted "John Smith Jr." "Smith, John Jr.")))
