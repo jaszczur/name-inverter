@@ -1,5 +1,4 @@
 (ns name-inverter.core
-  (:gen-class)
   (:require [clojure.string :as str]))
 
 (defn- ommit-honorifics [[first & rest :as names]]
@@ -25,7 +24,3 @@
     ""
     (format-name name)))
 
-(defn -main
-  "I don't do a whole lot ... yet."
-  [& args]
-  (println "Hello, World!"))
