@@ -1,6 +1,5 @@
 (ns name-inverter.core-test
   (:require [clojure.test :refer :all]
-            [clojure.string :as str]
             [name-inverter.core :refer :all]))
 
 (defn assert-inverted [name inverted]
