@@ -6,7 +6,12 @@
 (defn invert-name [name]
   (if (nil? name)
     ""
-    (str/trim name)))
+    (let [splitted (str/split (str/trim name) #" ")]
+      (if (= (count splitted) 1)
+        (nth splitted 0)
+        (str (nth splitted 1) ", " (nth splitted 0))))))
+
+
 
 (defn assert-inverted [name inverted]
   (is (= (invert-name name) inverted)))
@@ -19,4 +24,6 @@
   (testing "given empty string should return empty string"
     (assert-inverted "" ""))
   (testing "given simple name with spaces should return it w/o spaces"
-    (assert-inverted " Piotr " "Piotr")))
+    (assert-inverted " Piotr " "Piotr"))
+  (testing "given First Last should return Last, First"
+    (assert-inverted "John Smith" "Smith, John")))
