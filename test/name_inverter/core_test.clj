@@ -38,4 +38,7 @@
     (assert-inverted "Mr. John Smith" "Smith, John")
     (assert-inverted "Mrs. Barbara Smith" "Smith, Barbara"))
   (testing "post nominals should stay at the end"
-    (assert-inverted "John Smith Jr." "Smith, John Jr.")))
+    (assert-inverted "John Smith Jr." "Smith, John Jr.")
+    (assert-inverted "John Smith BS. Phd." "Smith, John BS. Phd."))
+  (testing "integration"
+    (assert-inverted "  Mr.  Robert   Martin  III   esq.   " "Martin, Robert III esq.")))
