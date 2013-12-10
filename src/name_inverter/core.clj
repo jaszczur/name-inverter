@@ -16,7 +16,7 @@
 (defn- format-name [name]
   (let [names (ommit-honorifics (split-name name))]
       (if (= (count names) 1)
-        (nth names 0)
+        (first names)
         (format-multi-element-name names))))
 
 (defn invert-name [name]
