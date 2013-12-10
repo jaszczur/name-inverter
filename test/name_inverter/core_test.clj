@@ -3,10 +3,14 @@
             [clojure.string :as str]
             [name-inverter.core :refer :all]))
 
+(defn ommit-honorifics [[first & rest :as names]]
+  (if (some (partial = first) ["Mr." "Mrs."]) rest names))
+
 (defn invert-name [name]
   (if (nil? name)
     ""
-    (let [splitted (str/split (str/trim name) #"\s+")]
+    (let [splitted (str/split (str/trim name) #"\s+")
+          splitted (ommit-honorifics splitted)]
       (if (= (count splitted) 1)
         (nth splitted 0)
         (str (nth splitted 1) ", " (nth splitted 0))))))
@@ -28,4 +32,7 @@
   (testing "given First Last should return Last, First"
     (assert-inverted "John Smith" "Smith, John"))
   (testing "given FL with spaces should return LF w/o spaces"
-    (assert-inverted "  John   Smith" "Smith, John")))
+    (assert-inverted "  John   Smith" "Smith, John"))
+  (testing "should ignore honorifics"
+    (assert-inverted "Mr. John Smith" "Smith, John")
+    (assert-inverted "Mrs. Barbara Smith" "Smith, Barbara")))
